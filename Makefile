@@ -54,10 +54,13 @@ stop-ldap:
 clean-ldap: stop-ldap
 	${call docker_rm,ldap}
 
-backup-ldap: stop-ldap
-	docker run --rm --volumes-from ldap-data -v ${PWD}:/backup mysql tar cvfz /backup/ldap-data.tar.gz /var/lib/ldap
+backup-ldap:
+	ldapsearch -b dc=flinkwork,dc=com -x -LLL -D cn=admin,dc=flinkwork,dc=com -w admin > ldap.ldif
 
-restore-ldap: stop-ldap
-	docker run --rm --volumes-from ldap-data -v ${PWD}:/backup ldap tar xvfz /backup/ldap-data.tar.gz
+delete-ldap-entries:
+	ldapdelete -r "dc=flinkwork,dc=com" -x -w admin -D cn=admin,dc=flinkwork,dc=com
+
+restore-ldap: delete-ldap-entries
+	ldapadd -D cn=admin,dc=flinkwork,dc=com -w admin -f ldap.ldif
 
 clean:	clean-mysql clean-mysql-data clean-ldap

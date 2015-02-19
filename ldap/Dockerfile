@@ -9,4 +9,3 @@ RUN service slapd start ;\
 
 EXPOSE 389
 VOLUME /var/lib/ldap
-:xa
