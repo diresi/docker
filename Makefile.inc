@@ -21,7 +21,7 @@ endef
 build:
 	docker build -t ${TAG_NAME} .
 
-create-data: build
+create-data:
 	docker ps -a | grep '${DATA_NAME} *$$' || docker run --name ${DATA_NAME} ${TAG_NAME} echo "data container '${DATA_NAME}' created"
 
 clean-data: clean
@@ -35,6 +35,9 @@ stop:
 
 clean: stop
 	${call docker_rm,${NAME}}
+
+show-data-dir:
+	@echo ${DATA_DIR}
 
 raw-backup: stop
 	docker run --rm --volumes-from ${DATA_NAME} -v ${PWD}:${BACKUP_DIR} ${TAG_NAME} bash -c 'tar cfz ${BACKUP_FILE} ${DATA_DIR} && \
