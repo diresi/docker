@@ -1,0 +1,6 @@
+{
+  "mysql.pass": "secret",
+  "mysql.user": "phabricator",
+  "mysql.host": "mysql"
+}
+
