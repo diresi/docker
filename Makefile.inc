@@ -30,6 +30,9 @@ clean-data: clean
 run: build clean create-data
 	docker run -d --volumes-from ${DATA_NAME} ${RUN_ARGS} --name ${NAME} ${TAG_NAME}
 
+run-bash: build clean create-data
+	docker run --rm -it --volumes-from ${DATA_NAME} ${RUN_ARGS} --name ${NAME} ${TAG_NAME} bash
+
 stop:
 	${call docker_stop,${NAME}}
 
