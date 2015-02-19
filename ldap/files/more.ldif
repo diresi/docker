@@ -1,0 +1,12 @@
+dn: cn=Christoph Rissner,ou=Users,dc=flinkwork,dc=com
+objectclass: inetOrgPerson
+cn: Christoph Rissner
+sn: rissner
+uid: cri
+userpassword: cri
+homephone: +43 650 4437308
+mail: cri@flinkwork.com
+mail: diresi@gmx.net
+description: Boss
+ou: Development Department
+ou: Management

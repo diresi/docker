@@ -1,0 +1,26 @@
+dn: dc=flinkwork,dc=com
+dc: flinkwork
+objectClass: dcObject
+objectClass: organizationalUnit
+ou: flinkwork
+
+dn: ou=UserGroups,dc=flinkwork,dc=com
+objectClass: organizationalUnit
+ou: UserGroups
+
+dn: ou=Users,dc=flinkwork,dc=com
+objectClass: organizationalUnit
+ou: Users
+
+dn: ou=Roles,dc=flinkwork,dc=com
+objectClass: organizationalUnit
+ou: Roles
+
+dn: ou=Projects,dc=flinkwork,dc=com
+objectClass: organizationalUnit
+ou: Projects
+
+dn: cn=9fe2ff9ee4384b1894a90878d3e92bab,ou=Roles,dc=flinkwork,dc=com
+objectClass: organizationalRole
+ou: _member_
+cn: 9fe2ff9ee4384b1894a90878d3e92bab
