@@ -8,7 +8,7 @@ MAINTAINER Richard Osterloh, richard.osterloh@gmail.com
 RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/sources.list
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y git mysql-client apache2 dpkg-dev php5 libapache2-mod-php5 php5-mcrypt php5-mysql php5-gd php5-curl php-apc php5-cli php5-json ssh wget php5-ldap
+RUN apt-get install -y git mysql-client apache2 dpkg-dev php5 libapache2-mod-php5 php5-mcrypt php5-mysql php5-gd php5-curl php-apc php5-cli php5-json ssh wget php5-ldap python-pygments
 
 # Directory for ssh
 RUN mkdir /var/run/sshd
@@ -37,4 +37,5 @@ RUN ulimit -c 10000
 EXPOSE 80 22
 
 VOLUME /opt
+VOLUME /etc/php5
 CMD ["/usr/bin/supervisord"]
