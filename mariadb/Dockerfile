@@ -28,7 +28,8 @@ RUN \
   echo "mysql -e 'GRANT ALL PRIVILEGES ON *.* TO \"flinkwork\"@\"%\" IDENTIFIED VIA pam;'" >> /tmp/config && \
   echo "mysql -e 'GRANT ALL PRIVILEGES ON \`phabricator\_%\`.* TO \"phabricator\"@\"%\" IDENTIFIED VIA pam;'" >> /tmp/config && \
   bash /tmp/config && \
-  rm -f /tmp/config
+  rm -f /tmp/config && \
+  sed -i 's/^\(\[mysqld\]\)/\1\npam-use-cleartext-plugin/' /etc/mysql/my.cnf
 
 # Define mountable directories.
 VOLUME ["/etc/mysql", "/var/lib/mysql"]
