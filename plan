@@ -1,0 +1,19 @@
+ldap
+mariadb
+
+gerrit
+phabricator
+
+gitlab statt gerrit
+
+- dockerize jedes service (db, ldap, repos, review, ticketing, ci).
+- link services
+- "server" (ram, disk space, cpu cores?)
+- web frontend (haproxy?)
+- backup (wohin damit?)
+- dev env
+  - webserver
+  - wsgi?
+  - gearman?
+  - testing interfaces?
+  - ci?

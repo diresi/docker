@@ -1,4 +1,4 @@
-dn: cn=Christoph Rissner,ou=Users,dc=flinkwork,dc=com
+dn: uid=cri,ou=Users,dc=flinkwork,dc=com
 objectclass: inetOrgPerson
 cn: Christoph Rissner
 sn: rissner
@@ -10,3 +10,23 @@ mail: diresi@gmx.net
 description: Boss
 ou: Development Department
 ou: Management
+
+dn: uid=flinkwork,ou=Users,dc=flinkwork,dc=com
+objectclass: inetOrgPerson
+cn: Flink Worker
+sn: flinkwork
+uid: flinkwork
+userpassword: flinkwork
+homephone: +43 316 123456789
+mail: flinkwork@flinkwork.com
+ou: Dummy User
+
+dn: uid=phabricator,ou=Users,dc=flinkwork,dc=com
+objectclass: inetOrgPerson
+cn: Phabulous Worker
+sn: phabricator
+uid: phabricator
+userpassword: phabricator
+homephone: +43 316 123456789
+mail: phabricator@flinkwork.com
+ou: Dummy User

@@ -1,4 +1,5 @@
-.PHONY: run-ldap run-mysql run-gerrit run
+include ./Makefile.inc
+.PHONY: run-ldap run-mariadb run-gerrit run
 
 run-ldap:
 	make -C ldap run
@@ -6,19 +7,19 @@ run-ldap:
 stop-ldap: stop-gerrit stop-phabricator
 	make -C ldap stop
 
-run-mysql:
-	make -C mysql run
+run-mariadb:
+	make -C mariadb run
 
-stop-mysql: stop-gerrit stop-phabricator
-	make -C mysql stop
+stop-mariadb: stop-gerrit stop-phabricator
+	make -C mariadb stop
 
-run-gerrit: run-ldap run-mysql
+run-gerrit: run-ldap run-mariadb
 	make -C gerrit run
 
 stop-gerrit:
 	make -C gerrit stop
 
-run-phabricator: run-ldap run-mysql
+run-phabricator: run-ldap run-mariadb
 	make -C phabricator run
 
 stop-phabricator:
@@ -26,6 +27,6 @@ stop-phabricator:
 
 run: run-phabricator run-gerrit
 
-stop: stop-ldap stop-mysql
+stop: stop-ldap stop-mariadb
 
 restart: stop run
