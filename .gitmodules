@@ -1,3 +1,6 @@
 [submodule "rosterloh-phabricator"]
 	path = rosterloh-phabricator
 	url = https://github.com/rosterloh/docker
+[submodule "dockerfile-haproxy"]
+	path = dockerfile-haproxy
+	url = https://github.com/dockerfile/haproxy
