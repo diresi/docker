@@ -17,7 +17,7 @@ restore: delete-entries
 	ldapadd -D cn=admin,dc=flinkwork,dc=com -w admin -f ${LDIF_LINK}
 
 search:
-	ldapsearch -b dc=ou=Users,flinkwork,dc=com -x -LLL
+	ldapsearch -b ou=Users,dc=flinkwork,dc=com -x -LLL
 
 passwd:
 	read -r -p "uid: " LDAP_UID && \
