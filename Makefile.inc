@@ -1,5 +1,5 @@
 REPO := flinkwork
-.PHONY: build run stop create-data clean-data clean raw-backup raw-restore clean-images clean-container
+.PHONY: build run start stop kill create-data drop-data clean raw-backup raw-restore drop-image clean-images clean-containers
 
 TAG_NAME = ${REPO}/${NAME}
 DATA_NAME = ${NAME}-data
@@ -28,11 +28,13 @@ build:
 create-data:
 	docker ps -a | grep '${DATA_NAME} *$$' || docker run --name ${DATA_NAME} --entrypoint echo ${TAG_NAME} "data container '${DATA_NAME}' created"
 
-clean-data: clean
+drop-data: clean
 	${call docker_rm,${DATA_NAME}}
 
 run: build clean create-data
 	docker run -d --volumes-from ${DATA_NAME} ${RUN_ARGS} --name ${NAME} ${TAG_NAME}
+
+start: run
 
 run-bash: build clean create-data
 	docker run --rm -it --volumes-from ${DATA_NAME} ${RUN_ARGS} --name ${NAME} ${TAG_NAME} bash
@@ -67,9 +69,12 @@ clean-images:
 		docker rmi $$h; \
 	done
 
-clean-container:
+clean-containers:
 	for c in $$(docker ps -aq); do \
 		docker rm -v $$c; \
 	done
+
+drop-image: drop-data
+	docker rmi ${TAG_NAME}
 
 // vim: filetype=make
