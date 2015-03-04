@@ -14,6 +14,10 @@ define docker_stop
 	docker ps | grep '$1 *$$' >/dev/null && docker stop $1 || true
 endef
 
+define docker_kill
+	docker ps | grep '$1 *$$' >/dev/null && docker kill $1 || true
+endef
+
 define docker_rm
 	docker ps -a | grep '$1 *$$' >/dev/null && docker rm -v $1 || true
 endef
@@ -38,6 +42,9 @@ show-run:
 
 stop:
 	${call docker_stop,${NAME}}
+
+kill:
+	${call docker_kill,${NAME}}
 
 clean: stop
 	${call docker_rm,${NAME}}
