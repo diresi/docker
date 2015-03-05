@@ -4,6 +4,7 @@ FROM dockerfile/ubuntu
 RUN \
   sed -i 's/^# \(.*-backports\s\)/\1/g' /etc/apt/sources.list \
   && apt-get update \
+  && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y \
   && DEBIAN_FRONTEND=noninteractive apt-get install -y \
      python-mysqldb mariadb-client libqt4-xml \
      libboost-regex1.54.0 libboost-system1.54.0 libboost-filesystem1.54.0 \
