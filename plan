@@ -17,3 +17,11 @@ gitlab statt gerrit
   - gearman?
   - testing interfaces?
   - ci?
+
+
+http://java.dzone.com/articles/exploring-message-brokers
+
+distributed graph db
+https://github.com/thinkaurelius/titan/
+
+http://www.consul.io/intro/vs/zookeeper.html
