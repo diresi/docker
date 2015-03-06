@@ -29,5 +29,17 @@ http://www.consul.io/intro/vs/zookeeper.html
 ist genau was ich mitm pika machen wollt, nur viel weiter :)
 allerdings scheinen die worker zu forken, das mag die ente ja nicht soooo gern
 http://www.celeryproject.org/
+ad threads:
+siehe --pool: prefork (default), eventlet, gevent, solo or threads.
+ich kann jetzt forking auf nb.fork() umstellen und/oder threads auf
+bootstrap_thread() stellen.
+Beides sollte sich per monkeypatch regeln lassen.
+
+Für den nb.fork() Modus ists vll relevant die PID zu returnen, allerdings ist
+die opensource ente eh noch sehr jung, da lässt sich das vll machen. Sonst halt
+mit irgendeiner initialen Kommunikation direkt nach dem nb.fork().
+Die Idee dabei ist, dass der celery worker im master ente Prozess läuft, an der
+Stelle sollte er eigentlich gut forken können.
+
 für die visualisierung des fortschritts (schon allein, weil der typ so lustig schreibt):
 https://github.com/PolicyStat/jobtastic
