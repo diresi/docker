@@ -25,3 +25,8 @@ distributed graph db
 https://github.com/thinkaurelius/titan/
 
 http://www.consul.io/intro/vs/zookeeper.html
+
+scheint auch rpc zu unterstützen
+http://www.celeryproject.org/
+für die visualisierung des fortschritts (schon allein, weil der typ so lustig schreibt):
+https://github.com/PolicyStat/jobtastic
