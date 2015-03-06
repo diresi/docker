@@ -26,7 +26,8 @@ https://github.com/thinkaurelius/titan/
 
 http://www.consul.io/intro/vs/zookeeper.html
 
-scheint auch rpc zu unterstützen
+ist genau was ich mitm pika machen wollt, nur viel weiter :)
+allerdings scheinen die worker zu forken, das mag die ente ja nicht soooo gern
 http://www.celeryproject.org/
 für die visualisierung des fortschritts (schon allein, weil der typ so lustig schreibt):
 https://github.com/PolicyStat/jobtastic
