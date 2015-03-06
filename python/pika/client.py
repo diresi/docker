@@ -1,6 +1,5 @@
 import sys
 import time
-import threading
 import uuid
 import pika
 
@@ -10,12 +9,9 @@ except IndexError:
     count = 1
 
 all_messages = set()
-exit = threading.Event()
 
 def on_response(ch, method, props, body):
     all_messages.remove(props.correlation_id)
-    if not all_messages:
-        exit.set()
 
 s = time.time()
 connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
@@ -38,7 +34,7 @@ for i in xrange(count):
                           ),
                           body=message)
 
-print "all send", time.time() - s
-while not exit.is_set():
+print "all send after %.02f seconds, %s messages remaining" % (time.time() - s, len(all_messages))
+while all_messages:
     connection.process_data_events()
-print "done", time.time() - s
+print "all received after %.02f seconds, %s messages remaining" % (time.time() - s, len(all_messages))
