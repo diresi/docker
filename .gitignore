@@ -1,2 +1,3 @@
 .rope*
 /venv
+*.egg-info

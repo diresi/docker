@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+set -x
 
 ENTE_DIR=${ENTE_DIR:-/home/ente/ente}
 PYTHON=${PYTHON:-python2}
@@ -7,7 +8,7 @@ PYTHON=${PYTHON:-python2}
 eval $(${PYTHON} -c "
 import ConfigParser
 cp = ConfigParser.ConfigParser()
-cp.read('${HOME}/data/ente.cfg')
+cp.read('${HOME}/src/ente.cfg')
 print ' '.join(['%s=%s' % (k.upper(), v) for k, v in cp.items('ENTE')])")
 
 MYSQL=${MYSQL:-"mysql -h${SERVERNAME} -P${PORT} -u${USERNAME} -p${PASSWORD}"}
@@ -23,5 +24,20 @@ then
     python2 ${ENTE_DIR}/contrib/ente_bootstrap.py --host=${SERVERNAME} --port=${PORT} --user=${USERNAME} --passwd=${PASSWORD} --db=${DB}
 fi
 
+# set up virtualenv
+if [ ! -d ${HOME}/data/venv ];
+then
+    cd ${HOME}/data
+    virtualenv --system venv
+    source venv/bin/activate
+    pip install -r ${HOME}/src/requirements.txt
+fi
+
+ln -sf ${ENTE_DIR}/python/ente_common  ${HOME}/data/venv/lib/python2.7/site-packages/ente
+
+# activate venv
+source ${HOME}/data/venv/bin/activate
+
+# start the ente
 cd ${ENTE_DIR}/contrib/minimal
-${ENTE_DIR}/ente --console --initscript ${HOME}/data/my_init.py
+${ENTE_DIR}/ente --console --initscript ${HOME}/src/my_init.py

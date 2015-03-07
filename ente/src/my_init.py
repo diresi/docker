@@ -1,7 +1,7 @@
 import ConfigParser
 cfg = {}
 cp = ConfigParser.ConfigParser()
-cp.read('/home/ente/data/ente.cfg')
+cp.read('/home/ente/src/ente.cfg')
 for section in cp.sections():
     sec_cfg = dict([(key.lower(), value) for key, value in cp.items(section)])
     cfg[section.lower()] = sec_cfg
@@ -12,7 +12,7 @@ def get_section(s):
 def get_entry(e, default=None):
     section, key = e.lower().split(".", 1)
     return cfg.get(section, {}).get(key, default)
-    
+
 def add_change_hook(f):
     pass
 
