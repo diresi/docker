@@ -38,6 +38,6 @@ EXPOSE 7000
 
 USER ente
 ENV HOME=/home/ente
-RUN sudo chown -R ente.ente ${HOME}
 VOLUME ${HOME}/data
+RUN sudo chown -R ente.ente ${HOME}
 CMD ["/home/ente/src/run.sh"]

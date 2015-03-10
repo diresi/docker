@@ -3,11 +3,16 @@ import ente as E
 
 # monkeypatch threadpool threads
 import threadpool
-from __main__ import bootstrap_thread, nb_threadlocal
-threadpool._WorkerThread = threadpool.WorkerThread
+from __main__ import bootstrap_thread
+
+try:
+    threadpool._WorkerThread
+except AttributeError:
+    threadpool._WorkerThread = threadpool.WorkerThread
+
 class WorkerThread(threadpool._WorkerThread):
     def run(self):
-        return bootstrap_thread(super(WorkerThread, self).run)
+        return bootstrap_thread(lambda: threadpool._WorkerThread.run(self))
 threadpool.WorkerThread = WorkerThread
 
 class Config(object):

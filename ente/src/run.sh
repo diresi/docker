@@ -24,6 +24,8 @@ then
     python2 ${ENTE_DIR}/contrib/ente_bootstrap.py --host=${SERVERNAME} --port=${PORT} --user=${USERNAME} --passwd=${PASSWORD} --db=${DB}
 fi
 
+sudo chown ente.ente ${HOME}/data
+
 # set up virtualenv
 if [ ! -d ${HOME}/data/venv ];
 then
