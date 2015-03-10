@@ -1,3 +1,5 @@
+import os
+
 from celery import Celery
 import ente_common as E
 
@@ -16,7 +18,7 @@ class WorkerThread(threadpool._WorkerThread):
 threadpool.WorkerThread = WorkerThread
 
 class Config(object):
-    CELERYD_POOL = "threads"
+    CELERYD_POOL = "prefork"
     CELERYD_ACCEPT_CONTENT = ["pickle", "json", "msgpack", "yaml"]
 
 app = Celery("tasks.tasks", backend="redis://redis", broker="amqp://guest@rabbitmq//")
@@ -37,3 +39,9 @@ def e_name(nid):
 @E.tx_abort_encaps
 def _e_name(nid):
     return E.e_name(nid)
+
+@app.task
+def modify():
+    pid = os.getpid()
+    nid = E.tx_encaps(E.e_create_node)("NVAL", E.nb.root(), "H", name=str(pid))
+    return (pid, nid)

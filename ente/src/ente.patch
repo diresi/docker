@@ -1,0 +1,76 @@
+diff -r b351f6e37788 ENTE/ETransaction.cpp
+--- a/ENTE/ETransaction.cpp	Thu Feb 12 14:36:12 2015 +0100
++++ b/ENTE/ETransaction.cpp	Tue Mar 10 19:45:30 2015 +0000
+@@ -1665,7 +1665,7 @@
+         }
+         TxLoudenAll();
+         louden.Dismiss();
+-        return slave_id;
++        return pid;
+     } else
+     {
+         louden.Dismiss();
+diff -r b351f6e37788 Python/PythonNeuro.cpp
+--- a/Python/PythonNeuro.cpp	Thu Feb 12 14:36:12 2015 +0100
++++ b/Python/PythonNeuro.cpp	Tue Mar 10 19:45:30 2015 +0000
+@@ -1118,7 +1118,7 @@
+ static int os_fork()
+ {
+     object os_namespace = import("os").attr("__dict__");
+-    object res = os_namespace["fork"]();
++    object res = os_namespace["_ente_redirected_fork"]();
+     return extract<int>(res)();
+ }
+ 
+@@ -1130,17 +1130,17 @@
+     AnsiString sockname = visotech::python::py_get_vtconfig_path_join("run", "fork.sock");
+     vt_assert(sockname.Length() < UNIX_PATH_MAX);
+     ObjJanitor reconnect(*VTCOM::GetGEN(), &CLS_GEN::Reconnect);
+-    int slave_id = TxPrepareFork(ente_, sockname, os_fork, unblockgil_callback<TxQuiesceFunc, void*>);
++    int pid = TxPrepareFork(ente_, sockname, os_fork, unblockgil_callback<TxQuiesceFunc, void*>);
+     VTCOM::GetGEN()->Reconnect();
+     reconnect.Dismiss();
+ 
+     if (!ente_->IsSlaveEnte()) {
+-        vt_assert(slave_id > 0);
+-        return object(slave_id);
++        return object(pid);
+     }
+ 
+     VTCOM::GetGEN()->GetAPPI()->APPI_PyDbgF->ResetAfterFork();
+ 
++    int slave_id = -1;
+     TxStartSynching(make_log_path);
+     {
+         GiveUpBlock b;
+diff -r b351f6e37788 python/system/ente_init.py
+--- a/python/system/ente_init.py	Thu Feb 12 14:36:12 2015 +0100
++++ b/python/system/ente_init.py	Tue Mar 10 19:45:30 2015 +0000
+@@ -54,6 +54,12 @@
+         def read(self):
+             return self.stream.read()
+ 
++	def close(self):
++            try:
++                self.stream.close()
++            except AttributeError:
++                pass
++
+     sys.ps1 = '>>> '
+     sys.ps2 = '... '
+ 
+diff -r b351f6e37788 python/system/init_first.py
+--- a/python/system/init_first.py	Thu Feb 12 14:36:12 2015 +0100
++++ b/python/system/init_first.py	Tue Mar 10 19:45:30 2015 +0000
+@@ -87,3 +87,11 @@
+     os.environ["PYTHONPATH"] = py_path
+ 
+ setup_path()
++
++def ente_fork():
++    import visotech.neurobase
++    nb = visotech.neurobase.NeuroBase.instance
++    return nb.fork()
++
++os._ente_redirected_fork = os.fork
++os.fork = ente_fork
