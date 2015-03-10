@@ -27,10 +27,9 @@ sys.argv = ["run.py"]
 import tasks.tasks
 reload(tasks.tasks)
 
-from __main__ import bootstrap_thread
-#ente_init.set_bgthread_hook(lambda *a, **kw: bootstrap_thread(tasks.tasks.app.worker_main))
-#def whatever(*a, **kw):
-#    while True:
-#        print "WHRASD", a, kw
-#    sys.exit(0)
-#ente_init.set_bgthread_hook(whatever)
+def start_main_thread(*a, **kw):
+    import threading
+    threading.Thread(target=tasks.tasks.app.worker_main).start()
+    # do not join, ente needs this function to return
+
+ente_init.set_bgthread_hook(start_main_thread)

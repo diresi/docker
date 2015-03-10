@@ -1,5 +1,5 @@
 from celery import Celery
-import ente as E
+import ente_common as E
 
 # monkeypatch threadpool threads
 import threadpool

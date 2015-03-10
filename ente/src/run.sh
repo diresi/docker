@@ -35,8 +35,6 @@ then
     pip install -r ${HOME}/src/requirements.txt
 fi
 
-ln -sf ${ENTE_DIR}/python/ente_common  ${HOME}/data/venv/lib/python2.7/site-packages/ente
-
 # activate venv
 source ${HOME}/data/venv/bin/activate
 
