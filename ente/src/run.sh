@@ -42,4 +42,4 @@ source ${HOME}/data/venv/bin/activate
 
 # start the ente
 cd ${ENTE_DIR}/contrib/minimal
-${ENTE_DIR}/ente --console --initscript ${HOME}/src/my_init.py
+${ENTE_DIR}/ente --initscript ${HOME}/src/my_init.py
