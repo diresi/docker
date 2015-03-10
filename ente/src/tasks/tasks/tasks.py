@@ -16,7 +16,8 @@ class WorkerThread(threadpool._WorkerThread):
 threadpool.WorkerThread = WorkerThread
 
 class Config(object):
-    CELERYD_POOL= "threads"
+    CELERYD_POOL = "threads"
+    CELERYD_ACCEPT_CONTENT = ["pickle", "json", "msgpack", "yaml"]
 
 app = Celery("tasks.tasks", backend="redis://redis", broker="amqp://guest@rabbitmq//")
 app.config_from_object(Config)
