@@ -10,6 +10,7 @@ RUN \
      libboost-regex1.54.0 libboost-system1.54.0 libboost-filesystem1.54.0 \
      libboost-program-options1.54.0 libboost-iostreams1.54.0 libboost-python1.54.0 \
      libprotobuf8 libicu52 python-virtualenv \
+     ack-grep gdb \
   && DEBIAN_FRONTEND=noninteractive apt-get install -y \
      scons libmariadbclient-dev libqt4-dev \
      libprotobuf-dev protobuf-compiler \
