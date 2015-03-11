@@ -1,6 +1,5 @@
 FROM dockerfile/ubuntu
 
-# Install Haproxy.
 RUN \
   sed -i 's/^# \(.*-backports\s\)/\1/g' /etc/apt/sources.list \
   && apt-get update \
@@ -33,4 +32,4 @@ USER ente
 ENV HOME=/home/ente
 VOLUME ${HOME}
 RUN sudo chown -R ente.ente ${HOME}
-CMD ["/home/ente/src/run.sh"]
+CMD ["/home/ente/scripts/run.sh"]

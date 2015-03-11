@@ -45,3 +45,18 @@ def modify():
     pid = os.getpid()
     nid = E.tx_encaps(E.e_create_node)("NVAL", E.nb.root(), "H", name=str(pid))
     return (pid, nid)
+
+@E.tx_abort_encaps
+def _list_root():
+    return E.e_walk(E.nb.root(), (E.DOWN, 1))
+
+@app.task
+def list():
+    pid = os.getpid()
+    import time
+    s = time.time()
+    try:
+        nids = _list_root()
+        return pid, nids
+    finally:
+        print "%s took %s" % (pid, time.time() - s)

@@ -3,7 +3,7 @@ import tasks.tasks
 import time
 
 tt = []
-for x in range(10):
+for x in range(1):
     s = time.time()
     tasks.tasks.test()
     tt.append(time.time() -s)

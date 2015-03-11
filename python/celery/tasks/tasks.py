@@ -23,15 +23,15 @@ def e_name(nid):
 def modify():
     pass
 
+@app.task
+def list():
+    pass
+
 def test():
-    pid_nids = group(modify.s() for i in xrange(10))().get()
-    pids = set([x[0] for x in pid_nids])
-    nids = sorted([x[1] for x in pid_nids])
-    names = group(e_name.s(nid) for nid in nids)().get()
-    print pid_nids
-    print pids
-    print nids
-    print names
+    reqs = [list.delay() for x in range(1)]
+    print "a list will follow"
+    for r in reqs:
+        print r.get()
 
 if __name__ == "__main__":
     app.worker_main()
