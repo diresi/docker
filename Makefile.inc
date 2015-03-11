@@ -1,5 +1,6 @@
 REPO := flinkwork
 .PHONY: build run start stop kill create-data drop-data clean raw-backup raw-restore drop-image clean-images clean-containers
+.PHONY: log logf
 
 TAG_NAME = ${REPO}/${NAME}
 DATA_NAME = ${NAME}-data
@@ -76,5 +77,11 @@ clean-containers:
 
 drop-image: drop-data
 	docker rmi ${TAG_NAME}
+
+log:
+	docker logs ${NAME}
+
+logf:
+	docker logs -f ${NAME}
 
 // vim: filetype=make
