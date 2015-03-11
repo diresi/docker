@@ -27,18 +27,10 @@ RUN \
 USER ente
 WORKDIR /home/ente
 
-RUN hg clone https://bitbucket.org/neurobase/ente
-RUN hg -R ente up -C opensource \
-    && cd ente \
-    && scons -j1 OPT=-O2 \
-    && strip ente \
-    && strip ente-tester \
-    && strip enteclient
-
 EXPOSE 7000
 
 USER ente
 ENV HOME=/home/ente
-VOLUME ${HOME}/data
+VOLUME ${HOME}
 RUN sudo chown -R ente.ente ${HOME}
 CMD ["/home/ente/src/run.sh"]

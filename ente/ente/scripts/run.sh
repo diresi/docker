@@ -2,7 +2,12 @@
 set -e
 set -x
 
-ENTE_DIR=${ENTE_DIR:-/home/ente/ente}
+SCRIPTS=$(dirname $0)
+
+# fetch and build ente
+${SCRIPTS}/build_ente.sh
+
+ENTE_DIR=${ENTE_DIR:-${HOME}/ente}
 PYTHON=${PYTHON:-python2}
 
 eval $(${PYTHON} -c "
@@ -24,19 +29,19 @@ then
     python2 ${ENTE_DIR}/contrib/ente_bootstrap.py --host=${SERVERNAME} --port=${PORT} --user=${USERNAME} --passwd=${PASSWORD} --db=${DB}
 fi
 
-sudo chown ente.ente ${HOME}/data
-
 # set up virtualenv
-if [ ! -d ${HOME}/data/venv ];
+if [ ! -d ${HOME}/venv ];
 then
-    cd ${HOME}/data
     virtualenv --system venv
     source venv/bin/activate
     pip install -r ${HOME}/src/requirements.txt
 fi
 
+# install local dependencies
+${SCRIPTS}/install_local_dependencies.sh
+
 # activate venv
-source ${HOME}/data/venv/bin/activate
+source ${HOME}/venv/bin/activate
 
 # start the ente
 cd ${ENTE_DIR}/contrib/minimal

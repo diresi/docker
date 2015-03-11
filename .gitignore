@@ -1,6 +1,10 @@
 .rope*
 /venv
+ente/ente/venv
+ente/ente/ente
+ente/ente/.*
 *.egg-info
 *.pyc
+*.swp
 __pycache__
 .enteclient_history
