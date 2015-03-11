@@ -47,16 +47,16 @@ def modify():
     return (pid, nid)
 
 @E.tx_abort_encaps
-def _list_root():
-    return E.e_walk(E.nb.root(), (E.DOWN, 1))
+def _list_children(nid=None):
+    if nid is None:
+        nid = E.nb.root()
+    return nid, E.e_walk(nid, (E.DOWN, 1))
 
 @app.task
-def list():
-    pid = os.getpid()
+def list_children(node_id=None):
     import time
     s = time.time()
     try:
-        nids = _list_root()
-        return pid, nids
+        return _list_children(node_id)
     finally:
-        print "%s took %s" % (pid, time.time() - s)
+        print "took %s for pid %s" % (time.time() - s, node_id)

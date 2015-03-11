@@ -24,11 +24,11 @@ def modify():
     pass
 
 @app.task
-def list():
+def list_children(node_id=None):
     pass
 
 def test():
-    reqs = [list.delay() for x in range(1)]
+    reqs = [list_children.delay() for x in range(1)]
     print "a list will follow"
     for r in reqs:
         print r.get()
