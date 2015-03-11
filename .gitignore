@@ -3,6 +3,8 @@
 ente/ente/venv
 ente/ente/ente
 ente/ente/.*
+flask/flask/.*
+flask/flask/venv
 *.egg-info
 *.pyc
 *.swp
