@@ -21,10 +21,13 @@ def start():
 @app.route("/results/<task_id>", methods=['GET'])
 def get_results(task_id):
     task = tasks.tasks.list_children.AsyncResult(task_id)
-    if task.ready():
-        return jsonify(result=task.get())
-    else:
-        return "Nay!", 202
+    try:
+        if task.ready():
+            return jsonify(result=task.get())
+        else:
+            return "Nay!", 202
+    except Exception as e:
+        return repr(e), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

@@ -47,16 +47,29 @@ def modify():
     return (pid, nid)
 
 @E.tx_abort_encaps
-def _list_children(nid=None):
+def _list_children(nid=None, attribs=None):
+    if attribs is None:
+        attribs = {}
     if nid is None:
         nid = E.nb.root()
-    return nid, E.e_walk(nid, (E.DOWN, 1))
+    def mkn(nid):
+        d = dict(id=nid)
+        for k, f in attribs.items():
+            d[k] = f(nid)
+        return d
+    return mkn(nid), [mkn(nid) for nid in E.e_walk(nid, (E.DOWN, 1))]
 
 @app.task
 def list_children(node_id=None):
     import time
     s = time.time()
     try:
-        return _list_children(node_id)
+        attribs = {"Name" : E.e_name,
+                   "Type" : E.e_nti,
+                   "Info" : E.e_info,
+                   "Value" : E.e_val,
+                  }
+        parent, kids = _list_children(node_id, attribs)
+        return dict(attribs=sorted(attribs), parent=parent, children=kids)
     finally:
         print "took %s for pid %s" % (time.time() - s, node_id)

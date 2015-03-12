@@ -28,18 +28,27 @@
         // fire another request
         $http.get('/results/'+jobID).
           success(function(data, status, headers, config) {
+            $scope.error = false;
+
             if(status === 202) {
               $log.log(data, status);
             } else if (status === 200){
               $log.log(data);
               $timeout.cancel(timeout);
-              $scope.parent_node = data["result"][0];
-              $scope.child_nodes = data["result"][1];
+
+              var result = data["result"];
+              $scope.attribs = result["attribs"];
+              $scope.parent_nodes = [result["parent"]];
+              $scope.child_nodes = result["children"];
               return false;
             }
             // continue to call the poller() function every 2 seconds
             // until the timeout is cancelled
             timeout = $timeout(poller, 2000);
+          }).
+          error(function(data, status, headers, config){
+              $log.log(data);
+              $scope.error = data;
           });
       };
       poller();
