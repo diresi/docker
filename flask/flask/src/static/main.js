@@ -53,6 +53,12 @@
       };
       poller();
     };
+
+    $scope.showNode = function(node_id) {
+        $log.log("showNode", node_id);
+        $scope.input_node_id = node_id;
+        $scope.getResults();
+    };
   }
 
   ]);

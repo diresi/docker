@@ -16,7 +16,7 @@
   </head>
   <body ng-controller="EnteDemoController">
     <div class="container">
-      <h1>Ente Children 3000</h1>
+      <h1>Ente Viewer</h1>
       <form role="form" ng-submit="getResults()">
         <div class="form-group">
           <input type="text" name="node_id" class="form-control" id="node_id-box" placeholder="Enter Node ID:" style="max-width: 300px;" ng-model="input_node_id" required>
@@ -45,7 +45,7 @@
             <tr ng-repeat="node in parent_nodes">
               <td>{{node.id}}</td>
               <td ng-repeat="key in attribs">{{node[key]}}</td>
-            <tr>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -60,9 +60,13 @@
           </thead>
           <tbody>
             <tr ng-repeat="node in child_nodes | orderBy:'id'">
-              <td>{{node.id}}</td>
+              <td>
+                <a href ng-click="showNode(node.id)">
+                  {{node.id}}
+                </a>
+              </td>
               <td ng-repeat="key in attribs">{{node[key]}}</td>
-            <tr
+            </tr>
           </tbody>
         <table>
       </div>
