@@ -27,7 +27,7 @@ build:
 	docker build -t ${TAG_NAME} .
 
 create-data:
-	docker ps -a | grep '${DATA_NAME} *$$' || docker run --name ${DATA_NAME} --entrypoint echo ${TAG_NAME} "data container '${DATA_NAME}' created"
+	docker ps -a | grep '${DATA_NAME} *$$' || docker run --name ${DATA_NAME} ${RUN_ARGS} --entrypoint echo ${TAG_NAME} "data container '${DATA_NAME}' created"
 
 drop-data: clean
 	${call docker_rm,${DATA_NAME}}
