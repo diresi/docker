@@ -23,6 +23,9 @@ global_stuff.config_funcs = [get_section, get_entry, add_change_hook]
 import ente_init
 ente_init.init_io_redirect("utf-8")
 
+import ente_common
+ente_common.init_nb()
+
 # ente processes don't provide sys.argv, thats why we fake it here
 import sys
 sys.argv = ["run.py"]

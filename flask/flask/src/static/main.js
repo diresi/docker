@@ -2,9 +2,16 @@
 
   'use strict';
 
-  angular.module('EnteDemoApp', [])
+  var app = angular.module('EnteDemoApp', [])
 
-  .controller('EnteDemoController', ['$scope', '$log', '$http', '$timeout', function($scope, $log, $http, $timeout) {
+  app.config(['$locationProvider',
+      function($locationProvider) {
+        $locationProvider.html5Mode(true);
+      }
+  ]);
+
+  app.controller('EnteDemoController', ['$scope', '$log', '$http', '$timeout', '$location',
+      function($scope, $log, $http, $timeout, $location) {
     $scope.getResults = function() {
       $log.log("test");
 
@@ -19,7 +26,6 @@
         error(function(error) {
           $log.log(error);
         });
-
     };
 
     function getJobResult(jobID) {
@@ -59,8 +65,9 @@
         $scope.input_node_id = node_id;
         $scope.getResults();
     };
+    $log.log("loadddddd");
+    $log.log($location.path());
   }
 
   ]);
-
 }());

@@ -24,7 +24,7 @@ def modify():
     pass
 
 @app.task
-def list_children(node_id=None):
+def node_info(node_id=None):
     pass
 
 def test():

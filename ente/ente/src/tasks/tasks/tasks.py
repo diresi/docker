@@ -46,30 +46,40 @@ def modify():
     nid = E.tx_encaps(E.e_create_node)("NVAL", E.nb.root(), "H", name=str(pid))
     return (pid, nid)
 
+
+node_desc = dict(id = E.e_nid,
+                 name = E.e_name,
+                 info = E.e_info,
+                 value = E.e_val,
+                 type = E.e_nt)
+
+def _eval_dict(item, desc):
+    d = {}
+    for k, v in desc.items():
+        d[k] = v(item) if callable(v) else v
+    return d
+
+def mk_node(nid, **kw):
+    d = _eval_dict(nid, node_desc)
+    d.update(_eval_dict(nid, kw))
+    return d
+
+def walk_nodes(nid, direction):
+    res = []
+    for nid, eid, lvl in E.nb.walk(nid, [(direction, 1, 1, [])]):
+        res.append(mk_node(nid, edge=lambda *a: E.e_name(eid)))
+    return res
+
 @E.tx_abort_encaps
-def _list_children(nid=None, attribs=None):
-    if attribs is None:
-        attribs = {}
-    if nid is None:
-        nid = E.nb.root()
-    def mkn(nid):
-        d = dict(id=nid)
-        for k, f in attribs.items():
-            d[k] = f(nid)
-        return d
-    return mkn(nid), [mkn(nid) for nid in E.e_walk(nid, (E.DOWN, 1))]
+def _node_info(nid):
+    return (mk_node(nid), walk_nodes(nid, E.UP), walk_nodes(nid, E.DOWN))
 
 @app.task
-def list_children(node_id=None):
+def node_info(node_id=None):
     import time
     s = time.time()
     try:
-        attribs = {"Name" : E.e_name,
-                   "Type" : E.e_nti,
-                   "Info" : E.e_info,
-                   "Value" : E.e_val,
-                  }
-        parent, kids = _list_children(node_id, attribs)
-        return dict(attribs=sorted(attribs), parent=parent, children=kids)
+        node, parents, children = _node_info(node_id)
+        return dict(node=node, parents=parents, children=children)
     finally:
         print "took %s for pid %s" % (time.time() - s, node_id)
