@@ -1,6 +1,5 @@
 include ../Makefile.inc
 
-NAME := ldap
 RUN_ARGS := -p 389:389
 
 LDIF_FILE = flinkwork.com.${shell date +%Y%m%d-%H%M}.ldif

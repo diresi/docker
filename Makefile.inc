@@ -2,9 +2,11 @@ REPO := flinkwork
 .PHONY: build run start stop kill create-data drop-data clean raw-backup raw-restore drop-image clean-images clean-containers
 .PHONY: log logf
 
+NAME = ${shell basename ${CURDIR}}
 TAG_NAME = ${REPO}/${NAME}
 DATA_NAME = ${NAME}-data
 RUN_ARGS :=
+CMD_ARGS :=
 DATA_DIR = /var/lib/${NAME}
 
 BACKUP_DIR  = /backup
@@ -33,15 +35,15 @@ drop-data: clean
 	${call docker_rm,${DATA_NAME}}
 
 run: build clean create-data
-	docker run -d --volumes-from ${DATA_NAME} ${RUN_ARGS} --name ${NAME} ${TAG_NAME}
+	docker run -d --volumes-from ${DATA_NAME} ${RUN_ARGS} --name ${NAME} ${TAG_NAME} ${CMD_ARGS}
+
+show-run:
+	@echo docker run -d --volumes-from ${DATA_NAME} ${RUN_ARGS} --name ${NAME} ${TAG_NAME} ${CMD_ARGS}
 
 start: run
 
 run-bash: build clean create-data
 	docker run --rm -it --volumes-from ${DATA_NAME} ${RUN_ARGS} --name ${NAME} ${TAG_NAME} bash
-
-show-run:
-	@echo docker run -d --volumes-from ${DATA_NAME} ${RUN_ARGS} --name ${NAME} ${TAG_NAME}
 
 stop:
 	${call docker_stop,${NAME}}

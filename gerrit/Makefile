@@ -1,6 +1,5 @@
 include ../Makefile.inc
 
-NAME := gerrit
 DATA_DIR := /home/gerrit2/gerrit
 RUN_ARGS := -p 8080:8080 -p 29418:29418 --link ldap:ldap --link mysql:mysql
 
