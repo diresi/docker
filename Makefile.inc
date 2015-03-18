@@ -1,6 +1,6 @@
 REPO := flinkwork
 .PHONY: build run start stop kill create-data drop-data clean raw-backup raw-restore drop-image clean-images clean-containers
-.PHONY: log logf
+.PHONY: log logf inspect
 
 NAME = ${shell basename ${CURDIR}}
 TAG_NAME = ${REPO}/${NAME}
@@ -85,5 +85,8 @@ log:
 
 logf:
 	docker logs -f ${NAME}
+
+inspect:
+	docker inspect ${NAME}
 
 // vim: filetype=make
