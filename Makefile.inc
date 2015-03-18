@@ -43,7 +43,7 @@ show-run:
 start: run
 
 run-bash: build clean create-data
-	docker run --rm -it --volumes-from ${DATA_NAME} ${RUN_ARGS} --name ${NAME} ${TAG_NAME} bash
+	docker run --rm -it --volumes-from ${DATA_NAME} ${RUN_ARGS} --entrypoint bash --name ${NAME} ${TAG_NAME}
 
 stop:
 	${call docker_stop,${NAME}}
