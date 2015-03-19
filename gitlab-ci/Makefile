@@ -3,8 +3,8 @@ include ../Makefile.inc
 RUN_ARGS := -p 8083:80 \
 	--link redis:redisio \
 	  -e 'GITLAB_URL=http://10.0.0.1:8082' \
-	  -e 'GITLAB_APP_ID=cdf1bebcb966cecbcee2341d6a9ac64a17df27c99901812d005964db5e17b855' \
-	  -e 'GITLAB_APP_SECRET=3b342a4a619cddff5fc7683cfbf9f60a5201c9c7599a203770857d0e89d9cf30' \
+	  -e 'GITLAB_APP_ID=4cf1130c55619579ea762ff10e2acd0c96a7b6302f921f96d14de5a7994f1f33' \
+	  -e 'GITLAB_APP_SECRET=9b97eed46a64e863713fb97a71bb25c93cf8a48ff7d6e032df2727bc06b59c1a' \
 	--link postgresql:postgresql \
 	  -e 'DB_USER=flinkwork' \
       -e 'DB_PASS=flinkwork' \
