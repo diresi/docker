@@ -10,3 +10,4 @@ flask/flask/venv
 *.swp
 __pycache__
 .enteclient_history
+*.gz
