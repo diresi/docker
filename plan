@@ -43,3 +43,14 @@ Stelle sollte er eigentlich gut forken können.
 
 für die visualisierung des fortschritts (schon allein, weil der typ so lustig schreibt):
 https://github.com/PolicyStat/jobtastic
+
+
+anforderungen ans ticketing/review/...
+- zentrale repos
+- reviews mit versionshistorie (interdiff)
+- reviews mit verlinkbarkeit zum ticketing
+- ticketing mit verlinkbarkeit zum review
+- optional: ci integration (gated commits)
+- optional: mandatory approval fürs mergen
+- optional: automerge
+- nicht notwendig: acl
