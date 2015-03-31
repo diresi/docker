@@ -19,5 +19,5 @@ def modify():
     pass
 
 @app.task
-def list_children(node_id):
+def list_node(node_id):
     pass

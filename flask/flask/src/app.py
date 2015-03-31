@@ -15,12 +15,17 @@ def start():
         node_id = int(data["node_id"])
     except:
         node_id = None
-    task = tasks.tasks.list_children.delay(node_id)
+    task = tasks.tasks.list_node.delay(node_id)
     return task.task_id
+
+@app.route("/api/node/<int:node_id>", methods=['GET'])
+def get_node(node_id):
+    task = tasks.tasks.list_node.delay(node_id)
+    return jsonify(result=task.get())
 
 @app.route("/results/<task_id>", methods=['GET'])
 def get_results(task_id):
-    task = tasks.tasks.list_children.AsyncResult(task_id)
+    task = tasks.tasks.list_node.AsyncResult(task_id)
     try:
         if task.ready():
             return jsonify(result=task.get())

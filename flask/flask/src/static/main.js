@@ -38,7 +38,8 @@
 
               var result = data["result"];
               $scope.attribs = result["attribs"];
-              $scope.parent_nodes = [result["parent"]];
+              $scope.node = result["node"];
+              $scope.parent_nodes = result["parents"];
               $scope.child_nodes = result["children"];
               return false;
             }

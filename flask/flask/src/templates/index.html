@@ -32,8 +32,8 @@
         <br>
         {{error}}
       </div>
-      <div id="parent-table" ng-cloak ng-show="parent_nodes">
-        <h2>Parent</h2>
+      <div id="node-table" ng-cloak ng-show="node">
+        <h2>Node</h2>
         <table class="nodes table table-striped">
           <thead>
             <tr>
@@ -42,8 +42,33 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="node in parent_nodes">
-              <td>{{node.id}}</td>
+            <tr>
+              <td>
+                <a href ng-click="showNode(node.id)">
+                  {{node.id}}
+                </a>
+              </td>
+              <td ng-repeat="key in attribs">{{node[key]}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="parent-table" ng-cloak ng-show="parent_nodes">
+        <h2>Parents</h2>
+        <table class="nodes table table-striped">
+          <thead>
+            <tr>
+                <th>ID</th>
+                <th ng-repeat="attrib in attribs">{{attrib}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="node in parent_nodes | orderBy:'id'">
+              <td>
+                <a href ng-click="showNode(node.id)">
+                  {{node.id}}
+                </a>
+              </td>
               <td ng-repeat="key in attribs">{{node[key]}}</td>
             </tr>
           </tbody>

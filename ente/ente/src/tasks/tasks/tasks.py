@@ -47,7 +47,7 @@ def modify():
     return (pid, nid)
 
 @E.tx_abort_encaps
-def _list_children(nid=None, attribs=None):
+def _list_node(nid=None, attribs=None):
     if attribs is None:
         attribs = {}
     if nid is None:
@@ -57,10 +57,12 @@ def _list_children(nid=None, attribs=None):
         for k, f in attribs.items():
             d[k] = f(nid)
         return d
-    return mkn(nid), [mkn(nid) for nid in E.e_walk(nid, (E.DOWN, 1))]
+    return (mkn(nid),
+            [mkn(iid) for iid in E.e_walk(nid, (E.UP, 1))],
+            [mkn(iid) for iid in E.e_walk(nid, (E.DOWN, 1))])
 
 @app.task
-def list_children(node_id=None):
+def list_node(node_id=None):
     import time
     s = time.time()
     try:
@@ -69,7 +71,7 @@ def list_children(node_id=None):
                    "Info" : E.e_info,
                    "Value" : E.e_val,
                   }
-        parent, kids = _list_children(node_id, attribs)
-        return dict(attribs=sorted(attribs), parent=parent, children=kids)
+        node, parents, kids = _list_node(node_id, attribs)
+        return dict(attribs=sorted(attribs), node=node, parents=parents, children=kids)
     finally:
         print "took %s for pid %s" % (time.time() - s, node_id)
