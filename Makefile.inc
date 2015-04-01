@@ -8,6 +8,7 @@ DATA_NAME = ${NAME}-data
 RUN_ARGS :=
 CMD_ARGS :=
 DATA_DIR = /var/lib/${NAME}
+TZ_MOUNTS = -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro
 
 BACKUP_DIR  = /backup
 BACKUP_FILE = ${BACKUP_DIR}/${NAME}-${shell date +%Y%m%d-%H%M}.tar.gz
@@ -35,7 +36,7 @@ drop-data: clean
 	${call docker_rm,${DATA_NAME}}
 
 run: build clean create-data
-	docker run -d --volumes-from ${DATA_NAME} ${RUN_ARGS} --name ${NAME} ${TAG_NAME} ${CMD_ARGS}
+	docker run -d --volumes-from ${DATA_NAME} ${TZ_MOUNTS} ${RUN_ARGS} --name ${NAME} ${TAG_NAME} ${CMD_ARGS}
 
 show-run:
 	@echo docker run -d --volumes-from ${DATA_NAME} ${RUN_ARGS} --name ${NAME} ${TAG_NAME} ${CMD_ARGS}
