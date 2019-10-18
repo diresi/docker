@@ -27,7 +27,7 @@ intervals==0.3.1
 itsdangerous==0.24
 kombu==3.0.24
 librabbitmq==1.6.1
-marshmallow==1.2.2
+marshmallow==2.15.1
 py-bcrypt==0.4
 python-bcrypt==0.3.1
 pytz==2014.10
