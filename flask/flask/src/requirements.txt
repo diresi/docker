@@ -32,7 +32,7 @@ py-bcrypt==0.4
 python-bcrypt==0.3.1
 pytz==2014.10
 redis==2.10.3
-requests==2.2.1
+requests==2.20.0
 six==1.5.2
 urllib3==1.24.2
 validators==0.7
