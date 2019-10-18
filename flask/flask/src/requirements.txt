@@ -11,7 +11,7 @@ SQLAlchemy-Utils==0.29.8
 WTForms==2.0.2
 WTForms-Alchemy==0.13.0
 WTForms-Components==0.9.7
-Werkzeug==0.10.1
+Werkzeug==0.15.3
 amqp==1.4.6
 aniso8601==0.92
 anyjson==0.3.3
